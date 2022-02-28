@@ -5,11 +5,11 @@ import json
 def update_event_rule(message_body):
     """ Updates the event rule using a cron expression. """
 
-    year = 2022
-    month = 2
-    day = 28
-    hour = 21
-    minute = 14
+    year = message_body['schedule']['year']
+    month = message_body['schedule']['month']
+    day = message_body['schedule']['day']
+    hour = message_body['schedule']['hour']
+    minute = message_body['schedule']['minute']
 
     cron_expression = f'cron({minute} {hour} {day} {month} ? {year})'
 
@@ -45,7 +45,7 @@ if __name__ == '__main__':
     event_change_rule = {
         "Records": [
             {
-                "body": "{'schedule':{'year': '2022','month': '2','day': '28','hour': '22','minute': '13'}}"
+                "body": "{'schedule':{'year': '2022','month': '2','day': '28','hour': '22','minute': '21'}}"
             }
         ]
     }
