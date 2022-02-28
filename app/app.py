@@ -1,4 +1,54 @@
 import boto3
+import json
 
 
-client = boto3.client('cloudwatch')
+def update_event_rule(message_body):
+    """ Updates the event rule using a cron expression. """
+
+    year = 2022
+    month = 2
+    day = 28
+    hour = 21
+    minute = 14
+
+    cron_expression = f'cron({minute} {hour} {day} {month} ? {year})'
+
+    # Update the rule
+    client = boto3.client('events')
+
+    client.put_rule(
+    Name = "rule-test-lambda-every-minute",
+    ScheduleExpression = cron_expression,
+    State = "ENABLED"
+)
+
+def lambda_handler(event,context):
+    """ Handles the initial request. """
+
+    for record in event['Records']:
+        message_body = record['body']
+
+        # Replace the single backslashes with double
+        message_body = message_body.replace("\'", "\"")
+
+        # Convert the string response to JSON object
+        message_body = json.loads(message_body)
+
+        # Update the event rule
+        update_event_rule(message_body)
+
+
+
+if __name__ == '__main__':
+
+    # Create the events payload
+    event_change_rule = {
+        "Records": [
+            {
+                "body": "{'schedule':{'year': '2022','month': '2','day': '28','hour': '22','minute': '13'}}"
+            }
+        ]
+    }
+
+    # Trigger the lambda handler
+    lambda_handler(event_change_rule, '')
