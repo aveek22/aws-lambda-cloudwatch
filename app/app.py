@@ -25,7 +25,8 @@ def update_event_rule(message_body):
     # Update the rule
     client = boto3.client('events')
     client.put_rule(
-    Name = "rule-test-lambda-every-minute",
+    Name = "lambda_event_rule_instagram_20220301_1430",
+    Description = "Event to trigger lambda on 2022-03-01 at 14:30",
     ScheduleExpression = cron_expression,
     State = "ENABLED"
 )
@@ -70,7 +71,7 @@ if __name__ == '__main__':
     event_change_rule = {
         "Records": [
             {
-                "body": "{'schedule':{'year': '2022','month': '3','day': '1','hour': '00','minute': '2'},'tz_offset':'+0100'}"
+                "body": "{'schedule':{'year': '2022','month': '03','day': '01','hour': '12','minute': '02'},'tz_offset':'+0100'}"
             }
         ]
     }
