@@ -1,8 +1,7 @@
 import boto3
 import json
-from datetime import datetime as dt
 import pytz
-
+from datetime import datetime as dt
 
 
 def update_event_rule(message_body):
